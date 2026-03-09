@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+<meta charset="UTF-8">
+<title>McDo  - מקדולנס </title>
+<style>
+body { margin:0; font-family: Arial, sans-serif; background:#fff8e7; }
+header { background:#d90429; color:white; text-align:center; padding:20px; font-size:2em; }
+main { max-width:1000px; margin:20px auto; padding:10px; }
+.menu { display:flex; flex-wrap:wrap; justify-content:space-around; }
+.item { background:#fff; border:1px solid #ccc; border-radius:8px; width:220px; margin:10px; padding:10px; text-align:center; box-shadow:0 2px 5px rgba(0,0,0,0.1); transition:transform 0.2s; }
+.item:hover { transform:scale(1.05); }
+.item img { width:100%; height:150px; object-fit:cover; border-radius:8px; }
+.item button { margin-top:10px; padding:10px; background:#d90429; color:white; border:none; cursor:pointer; border-radius:5px; width:90%; font-weight:bold; }
+.cart { background:#ffcc00; padding:15px; border-radius:8px; margin-top:20px; }
+.cart h3 { margin-top:0; }
+.cart ul { list-style:none; padding:0; margin:0; }
+.cart li { padding:5px 0; }
+.cart button { padding:10px; background:#d90429; color:white; border:none; cursor:pointer; border-radius:5px; margin-top:10px; width:100%; font-weight:bold; }
+</style>
+</head>
+<body>
+
+<header>🍔 McDo הזממה מהירה  - </header>
+
+<main>
+
+<div class="menu" id="menu"></div>
+
+<div class="cart">
+  <h3>עגלת קניות</h3>
+  <ul id="cartList">אין פריטים עדיין</ul>
+  <p id="totalPrice">סה"כ: 0 ₪</p>
+  <button onclick="checkout()">לשלם</button>
+</div>
+
+<script>
+// רשימת מוצרים (תמונה מתוך תיקיית images/)
+const products = [
+  {name:"המבורגר קלאסי", price:25, img:"images/burger.jpg"},
+  {name:"צ'יפס גדול", price:15, img:"images/fries.jpg"},
+  {name:"קולה", price:10, img:"images/coke.jpg"},
+  {name:"קראנצ'י צ'יקן", price:30, img:"images/chicken.jpg"},
+  {name:" זה נראה כאילו את צריכה סלט רענן", price:20, img:"images/salad.jpg"},
+  {name:"קינוח את ממש לא צריכה btw", price:12, img:"images/dessert.jpg"}
+];
+
+let cart = [];
+
+// הצגת תפריט
+const menuDiv = document.getElementById("menu");
+products.forEach((p,i)=>{
+  const div = document.createElement("div");
+  div.className="item";
+  div.innerHTML = `<img src="${p.img}" alt="${p.name}"><h4>${p.name}</h4><p>${p.price} ₪</p><button onclick="addToCart(${i})">הוסף לעגלה</button>`;
+  menuDiv.appendChild(div);
+});
+
+// פונקציה להוסיף לעגלה
+function addToCart(i){
+  cart.push(products[i]);
+  updateCart();
+
+  // אנימציה קצרה
+  const btn = event.target;
+  btn.textContent = "✅ נוסף!";
+  setTimeout(()=>{ btn.textContent = "הוסף לעגלה"; }, 800);
+}
+
+// עדכון עגלת קניות
+function updateCart(){
+  const cartList = document.getElementById("cartList");
+  cartList.innerHTML = "";
+  let total=0;
+  cart.forEach((p,j)=>{
+    total+=p.price;
+    const li = document.createElement("li");
+    li.textContent = `${p.name} - ${p.price} ₪`;
+    cartList.appendChild(li);
+  });
+  document.getElementById("totalPrice").textContent = `סה"כ: ${total} ₪`;
+}
+
+// פונקצית Checkout
+function checkout(){
+  if(cart.length===0){ alert("העגלה ריקה 😅"); return; }
+  const messages = [
+  "👏 את לא חושבת שהגזמת?",
+    "😎 זה נראה יותר מדי עדיף שלא",
+    "איזה שמנה מה זה",
+    "🍔 תצפי למנה שתשבור לך את הבטן מהשומן 😉"
+  ];
+  const msg = messages[Math.floor(Math.random()*messages.length)];
+  alert(msg);
+  cart = [];
+  updateCart();
+}
+</script>
+
+</body>
+</html>
