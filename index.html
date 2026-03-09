@@ -2,7 +2,7 @@
 <html lang="he">
 <head>
 <meta charset="UTF-8">
-<title>McDo  - מקדולנס </title>
+<title>McDo Fun - הזמנות מהירות לליאל לכבוד היום הולדת</title>
 <style>
 body { margin:0; font-family: Arial, sans-serif; background:#fff8e7; }
 header { background:#d90429; color:white; text-align:center; padding:20px; font-size:2em; }
@@ -11,20 +11,29 @@ main { max-width:1000px; margin:20px auto; padding:10px; }
 .item { background:#fff; border:1px solid #ccc; border-radius:8px; width:220px; margin:10px; padding:10px; text-align:center; box-shadow:0 2px 5px rgba(0,0,0,0.1); transition:transform 0.2s; }
 .item:hover { transform:scale(1.05); }
 .item img { width:100%; height:150px; object-fit:cover; border-radius:8px; }
-.item button { margin-top:10px; padding:10px; background:#d90429; color:white; border:none; cursor:pointer; border-radius:5px; width:90%; font-weight:bold; }
+.item button { margin-top:10px; padding:10px; background:#d90429; color:white; border:none; cursor:pointer; border-radius:5px; width:90%; font-weight:bold; font-size:1em; }
 .cart { background:#ffcc00; padding:15px; border-radius:8px; margin-top:20px; }
 .cart h3 { margin-top:0; }
 .cart ul { list-style:none; padding:0; margin:0; }
-.cart li { padding:5px 0; }
-.cart button { padding:10px; background:#d90429; color:white; border:none; cursor:pointer; border-radius:5px; margin-top:10px; width:100%; font-weight:bold; }
+.cart li { padding:5px 0; font-size:1em; }
+.cart button { padding:10px; background:#d90429; color:white; border:none; cursor:pointer; border-radius:5px; margin-top:10px; width:100%; font-weight:bold; font-size:1em; }
+
+/* Media Queries לטלפון */
+@media (max-width: 600px) {
+  .menu { flex-direction: column; align-items:center; }
+  .item { width:90%; max-width:300px; }
+  header { font-size:1.5em; padding:15px; }
+  .cart { padding:10px; }
+  .cart li, .cart button, .item button { font-size:1.1em; }
+  .item img { height:200px; }
+}
 </style>
 </head>
 <body>
 
-<header>🍔 McDo הזממה מהירה  - </header>
+<header>🍔 McDo Fun - ליום הולדת שיתוףפעולה עם עילאי אוחנה</header>
 
 <main>
-
 <div class="menu" id="menu"></div>
 
 <div class="cart">
@@ -33,16 +42,17 @@ main { max-width:1000px; margin:20px auto; padding:10px; }
   <p id="totalPrice">סה"כ: 0 ₪</p>
   <button onclick="checkout()">לשלם</button>
 </div>
+</main>
 
 <script>
-// רשימת מוצרים (תמונה מתוך תיקיית images/)
+// רשימת מוצרים (תמונות בתיקייה images/)
 const products = [
   {name:"המבורגר קלאסי", price:25, img:"images/burger.jpg"},
   {name:"צ'יפס גדול", price:15, img:"images/fries.jpg"},
   {name:"קולה", price:10, img:"images/coke.jpg"},
   {name:"קראנצ'י צ'יקן", price:30, img:"images/chicken.jpg"},
-  {name:" זה נראה כאילו את צריכה סלט רענן", price:20, img:"images/salad.jpg"},
-  {name:"קינוח את ממש לא צריכה btw", price:12, img:"images/dessert.jpg"}
+  {name:"סלט רענן", price:20, img:"images/salad.jpg"},
+  {name:"קינוח", price:12, img:"images/dessert.jpg"}
 ];
 
 let cart = [];
@@ -60,8 +70,6 @@ products.forEach((p,i)=>{
 function addToCart(i){
   cart.push(products[i]);
   updateCart();
-
-  // אנימציה קצרה
   const btn = event.target;
   btn.textContent = "✅ נוסף!";
   setTimeout(()=>{ btn.textContent = "הוסף לעגלה"; }, 800);
@@ -81,14 +89,14 @@ function updateCart(){
   document.getElementById("totalPrice").textContent = `סה"כ: ${total} ₪`;
 }
 
-// פונקצית Checkout
+// Checkout
 function checkout(){
   if(cart.length===0){ alert("העגלה ריקה 😅"); return; }
   const messages = [
-  "👏 את לא חושבת שהגזמת?",
+   "👏 את לא חושבת שהגזמת?",
     "😎 זה נראה יותר מדי עדיף שלא",
-    "איזה שמנה מה זה",
-    "🍔 תצפי למנה שתשבור לך את הבטן מהשומן 😉"
+    "💖 תודה על ההזמנה, אני מקווה שהיא גורמת לך לשבוע!",
+    "🍔 צפה למנה שתשבור לך את הבטן מהשומן 😉"
   ];
   const msg = messages[Math.floor(Math.random()*messages.length)];
   alert(msg);
